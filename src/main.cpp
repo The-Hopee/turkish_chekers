@@ -1,5 +1,6 @@
 #include "../include/board.h"
 #include "../include/player.h"
+#include "../include/cheker.h"
 
 int main()
 {
