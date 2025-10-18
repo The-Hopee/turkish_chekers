@@ -4,12 +4,27 @@
 #include <stdlib.h>
 #include <iostream>
 
+#include "../include/cheker.h"
+
+void swap( checker& obj1, checker& obj2 )
+{
+    auto temp = obj1;
+    // swapping figures and colors
+    obj1.setFigure( obj2.getFigure() );
+    obj1.setColor( obj2.getColor() );
+
+    obj2.setFigure( temp.getFigure() );
+    obj2.setColor( temp.getColor() );
+
+    return;
+}
+
 class Board
 {
 private:
     enum { Size = 8 };
 
-    char board[Size][Size]; // gaming board
+    checker board[Size][Size]; // gaming board
 
     void init_board()
     {
@@ -19,13 +34,17 @@ private:
         {
             for( j = 0; j < Size; j++ )
             {
-                if( i == 1 || i == 2 || i == 5 || i == 6 )
+                if( i == 1 || i == 2 )
                 {
-                    board[i][j] = '*';
+                    board[i][j].setType(0);
+                    board[i][j].setColor('R');
+                    board[i][j].setFigure('*');
                 }
-                else
+                else if( i == 5 || i == 6 )
                 {
-                    board[i][j] = ' ';
+                    board[i][j].setType(0);
+                    board[i][j].setColor('W');
+                    board[i][j].setFigure('*');
                 }
             }
         }
@@ -50,16 +69,20 @@ public:
             std::cout << i + 1 << " ";
             for( j = 0; j < Size; j++ )
             {
-                if( i == 1 || i == 2)
+                if( board[i][j].getColor() == 'R' )
                 {
                     std::cout << "\033[31m";
-                }
-                else if ( i == 5 || i == 6 )
-                {
+                    std::cout << board[i][j].getFigure() << " ";
                     std::cout << "\033[0m";
                 }
-                std::cout << board[i][j] << " ";
-                std::cout << "\033[0m";
+                else if ( board[i][j].getColor() == 'W' )
+                {
+                    std::cout << board[i][j].getFigure() << " ";
+                }
+                else
+                {
+                    std::cout << board[i][j].getFigure() << " ";
+                }
             }
             std::cout << std::endl;
         }
@@ -69,7 +92,6 @@ public:
 
     void update( const int row_from, const char column_from, const int row_to, const char column_to )
     {
-        // step 1: find correct index into matrix;
         int col_from = -1;
         switch (column_from)
         {
@@ -134,11 +156,8 @@ public:
         }
 
         std::cout << row_from-1 << " " << col_from << " " << row_to-1 << " " << col_to << std::endl;
- 
-        board[row_from-1][col_from] = ' ';
-        board[row_to-1][col_to] = '*';
 
-        std::cout << "data: " <<  board[row_from-1][col_from] << " " << board[row_to-1][col_to] << std::endl;
+        swap(board[row_from-1][col_from], board[row_to-1][col_to]);
     }
 };
 
