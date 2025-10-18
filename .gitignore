@@ -1,0 +1,12 @@
+# build artifacts
+build/
+*.o
+*.exe
+*.so
+*.dll
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
