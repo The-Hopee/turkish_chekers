@@ -155,33 +155,33 @@ public:
             break;
         }
 
-        std::cout << row_from-1 << " " << col_from << " " << row_to-1 << " " << col_to << std::endl;
+        std::cout << std::endl;
 
         // todoo: need to check type of checker: damka or basic
 
-        if( board[row_from-1][col_from].getStatus() ) // if this damka then we have 4 moves
+        if( board[row_from-1][col_from].getStatus() ) // if this damka then we have 4 moves ( great )
         {
             // check what we not do diagonal move
 
             if( abs(row_from - row_to) >= 1 && abs(col_from - col_to) >= 1 )
             {
-                std::cerr << "u can`t do this move into this game!" << std::endl;
+                std::cerr << "u can`t do this move into this game! ( damka diagonal move )" << std::endl;
                 return;
             }
         }
-        else if( !board[row_from-1][col_from].getStatus() ) // else if this basic checker then we have 3 moves
+        else if( !board[row_from-1][col_from].getStatus() ) // else if this basic checker then we have 3 moves ( have problems )
         {
             // check what not do diagonal move and back move and distance == 1
 
-            if( abs(row_from - row_to) >= 1 && abs(col_from - col_to) >= 1 ) // diagonal
+            if( abs(row_from - row_to) >= 1 && abs(col_from - col_to) >= 1 ) // diagonal ( great )
             {
-                std::cerr << "u can`t do this move into this game!" << std::endl;
+                std::cerr << "u can`t do this move into this game! ( default checker diagonal move )" << std::endl;
                 return;
             }
 
-            if( ( abs(col_from - col_to) != 1 && abs(row_from - row_to) != 0 ) || ( row_to - row_from != 1 && col_to - col_from != 0 ) ) // move back + distance > 1
+            if( ( row_to - row_from  != 1 && col_from - col_to == 0 ) || ( abs(col_from - col_to) != 1 && row_from - row_to == 0) ) // move back + distance > 1
             {
-                std::cerr << "u can`t do this move into this game!" << std::endl;
+                std::cerr << "u can`t do this move into this game ( default checker basic move )!" << std::endl;
                 return;
             }
         }
