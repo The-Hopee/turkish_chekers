@@ -9,12 +9,14 @@
 void swap( checker& obj1, checker& obj2 )
 {
     auto temp = obj1;
-    // swapping figures and colors
+    // swapping figures and colors and statuses
     obj1.setFigure( obj2.getFigure() );
-    obj1.setColor( obj2.getColor() );
+    obj1.setColor ( obj2.getColor()  );
+    obj1.setStatus( obj2.getStatus() );
 
     obj2.setFigure( temp.getFigure() );
-    obj2.setColor( temp.getColor() );
+    obj2.setColor ( temp.getColor()  );
+    obj2.setStatus( temp.getStatus() );
 
     return;
 }
@@ -36,13 +38,11 @@ private:
             {
                 if( i == 1 || i == 2 )
                 {
-                    board[i][j].setType(0);
                     board[i][j].setColor('R');
                     board[i][j].setFigure('*');
                 }
                 else if( i == 5 || i == 6 )
                 {
-                    board[i][j].setType(0);
                     board[i][j].setColor('W');
                     board[i][j].setFigure('*');
                 }
@@ -156,6 +156,52 @@ public:
         }
 
         std::cout << row_from-1 << " " << col_from << " " << row_to-1 << " " << col_to << std::endl;
+
+        // todoo: need to check type of checker: damka or basic
+
+        if( board[row_from-1][col_from].getStatus() ) // if this damka then we have 4 moves
+        {
+            // check what we not do diagonal move
+
+            if( abs(row_from - row_to) >= 1 && abs(col_from - col_to) >= 1 )
+            {
+                std::cerr << "u can`t do this move into this game!" << std::endl;
+                return;
+            }
+        }
+        else if( !board[row_from-1][col_from].getStatus() ) // else if this basic checker then we have 3 moves
+        {
+            // check what not do diagonal move and back move and distance == 1
+
+            if( abs(row_from - row_to) >= 1 && abs(col_from - col_to) >= 1 ) // diagonal
+            {
+                std::cerr << "u can`t do this move into this game!" << std::endl;
+                return;
+            }
+
+            if( ( abs(col_from - col_to) != 1 && abs(row_from - row_to) != 0 ) || ( row_to - row_from != 1 && col_to - col_from != 0 ) ) // move back + distance > 1
+            {
+                std::cerr << "u can`t do this move into this game!" << std::endl;
+                return;
+            }
+        }
+
+        if( board[row_from-1][col_from].getColor() == 'W' && row_to == 1 )
+        {
+            if( !board[row_from-1][col_from].getStatus() )
+            {
+                board[row_from-1][col_from].setStatus(true);
+                board[row_from-1][col_from].setFigure('D');
+            }
+        }
+        else if( board[row_from-1][col_from].getColor() == 'R' && row_to == 8 )
+        {
+            if( !board[row_from-1][col_from].getStatus() )
+            {
+                board[row_from-1][col_from].setStatus(true);
+                board[row_from-1][col_from].setFigure('D');
+            }
+        }
 
         swap(board[row_from-1][col_from], board[row_to-1][col_to]);
     }

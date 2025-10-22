@@ -5,23 +5,24 @@
 #include <memory>
 #include "../include/board.h"
 
-struct move
-{
-    int m_row_from;
-    char m_column_from;
-    int m_row_to;
-    char m_column_to;
-
-    move(): m_row_from(-1), m_column_from('0'), m_row_to(-1), m_column_to('0') {}
-
-    move( const int row_from, const char column_from, const int row_to, const char column_to ): 
-    m_row_from(row_from), m_column_from(column_from), m_row_to(row_to), m_column_to(column_to) {}
-};
-
 class Player
 {
 private:
+    struct move
+    {
+        int m_row_from;
+        char m_column_from;
+        int m_row_to;
+        char m_column_to;
+
+        move(): m_row_from(-1), m_column_from('0'), m_row_to(-1), m_column_to('0') {}
+
+        move( const int row_from, const char column_from, const int row_to, const char column_to ): 
+        m_row_from(row_from), m_column_from(column_from), m_row_to(row_to), m_column_to(column_to) {}
+    };
+
     move mv;
+
 public:
 
     void get_input_from_user( Board& b )
