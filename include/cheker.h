@@ -4,21 +4,11 @@
 class checker
 {
 private:
-    int m_type; // type of chekers
     char m_color;
     char m_figure;
+    bool m_damka;
 public:
-    checker(): m_type(-1), m_color(' '), m_figure(' ') {}
-
-    void setType( int type )
-    {
-        m_type = type;
-    }
-
-    int getType() const
-    {
-        return m_type;
-    }
+    checker(): m_color(' '), m_figure(' '), m_damka(false) {}
 
     void setColor( char color )
     {
@@ -38,6 +28,16 @@ public:
     char getFigure() const
     {
         return m_figure;
+    }
+
+    void setStatus( bool stat )
+    {
+        m_damka = stat;
+    }
+
+    bool getStatus()
+    {
+        return m_damka;
     }
 
     ~checker() = default;
